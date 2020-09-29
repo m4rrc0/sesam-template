@@ -1,0 +1,29 @@
+{
+  "scripts": {
+    "start": "npm run watch",
+    "dev": "npm run watch",
+    "bs": "npm run build && npm run serve",
+    "build-ssr": "BUILD_STEP=ssr snowpack build",
+    "build-browser": "BUILD_STEP=browser snowpack build",
+    "build-html": "BUILD_STEP=browser node node_modules/sesamjs/build-html",
+    "build": "concurrently -n SSR,BROWSER -c magenta,cyan \"npm run build-ssr\" \"npm run build-browser\" && npm run build-html",
+    "watch-only": "BUILD_STEP=watch snowpack build --watch",
+    "serve": "es-dev-server --root-dir build --port 8081 --watch",
+    "watch": "concurrently -k -n build,serve -c green,blue \"npm run watch-only\" \"npm run serve\"",
+    "clean": "rm -rf build && rm -rf build-temp"
+  },
+  "dependencies": {
+    "svelte": "^3.25.1"
+  },
+  "devDependencies": {
+    "@snowpack/plugin-optimize": "^0.2.1",
+    "concurrently": "^5.3.0",
+    "es-dev-server": "^1.57.4",
+    "eslint": "^7.9.0",
+    "eslint-plugin-svelte3": "^2.7.3",
+    "prettier": "^2.1.2",
+    "prettier-plugin-svelte": "^1.2.1",
+    "sesamjs": "file:../../libs/sesamjs",
+    "snowpack": "^2.11.1"
+  }
+}
